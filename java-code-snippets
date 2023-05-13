@@ -1,0 +1,162 @@
+
+                      // Maps  ----------------------------------------------------------
+
+-------
+Map<Long, Map<Long, String>> data;
+data.entrySet()
+              .forEach(entry -> entry.getValue().entrySet().stream().filter(e -> e.getKey() >= 10L)
+              .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+    
+-------
+for (Map.Entry<Long, Map<Long, String>> entry : ipsData.entrySet()) {
+  entry.getValue().entrySet().stream().filter(e -> e.getKey() >= Long.valueOf("10"))
+  .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));}            
+      
+--------
+Optional<Map.Entry<Long, Map<Long, String>>> map = ipsData.entrySet()
+.stream()
+.filter(bigMap -> bigMap.getValue().entrySet().stream().filter(e -> !(e.getKey() >= Long.valueOf("10"))).findFirst().isEmpty())
+.findFirst();
+
+--------
+
+                      // Comparator  ----------------------------------------------------------
+
+// Custom comparator --------------------------------------------------
+Comparator<Map.Entry<Long, Map<Long, String>>> comparator = new Comparator<Map.Entry<Long, Map<Long, String>>>() {
+            @Override
+            public int compare(Map.Entry<Long, Map<Long, String>> firstEntry, Map.Entry<Long, Map<Long, String>> secondEntry) {
+
+                //extract the "key" of type "Long" from the nested Map in the FIRST Map Entry.
+                Long longFirst = firstEntry.getValue().entrySet().stream().map(Map.Entry::getKey).findFirst().orElseThrow(NullPointerException::new);
+
+                //extract the "key" of type "Long" from the nested Map in the SECOND Map Entry.
+                Long longSecond = secondEntry.getValue().entrySet().stream().map(Map.Entry::getKey).findFirst().orElseThrow(NullPointerException::new);
+
+                //Compare which "key" of the nested Map is greater.                
+                //In this case, the position of the Entries will not be changed
+                if (longFirst == longSecond) {
+                    return 0;
+                }
+                //The first entry will be replaced by the second entry, because first entry is greater.
+                if (longFirst > longSecond) {
+                    return 1;
+                }
+                //The first entry will be replaced by the second entry, because first entry is greater.
+                return -1;
+            }
+        };
+
+        Set<Map.Entry<Long, Map<Long, String>>> entries = data.entrySet();
+        //HERE the custom comparator is implemented
+        Map<Long, Map<Long, String>> finalMap = entries.stream().sorted(comparator).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        finalMap.entrySet().forEach(entry -> System.out.println(entry.getKey()));
+        data.entrySet().stream().sorted(comparator).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)).entrySet()
+        .forEach(entry -> System.out.println(entry.getKey()));
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+--------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
